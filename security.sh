@@ -83,8 +83,7 @@ if [ "${COMMAND}" != "lock" ] ; then
 fi
 case $COMMAND in
 	set-password)
-		if [[ ! -z $ACCOUNT && ! -z $SERVICE && ! -z $PASSWORD ]]; then
-			echo "Setting password for account: ${ACCOUNT} with service: ${SERVICE} in keychain: ${OSX_KEYCHAIN}"
+		if [[ ! -z $ACCOUNT && ! -z $SERVICE && ! -z $PASSWORD ]]; then			
 			if [ $DARWIN_VERSION_MAJOR -ne 10 ]; then
 				security add-generic-password -U -w ${PASSWORD} -a ${ACCOUNT} -s "${SERVICE}" ${OSX_KEYCHAIN}
 			else
@@ -94,8 +93,7 @@ case $COMMAND in
 		fi
 		;;
 	get-password)		
-		if [[ ! -z $ACCOUNT && ! -z $SERVICE ]]; then
-			echo "Getting password for account: ${ACCOUNT} with service: ${SERVICE} in keychain: ${OSX_KEYCHAIN}"
+		if [[ ! -z $ACCOUNT && ! -z $SERVICE ]]; then			
 			if [ $DARWIN_VERSION_MAJOR -ge 12 ]; then
 				security find-generic-password -w -a ${ACCOUNT} -s "${SERVICE}" ${OSX_KEYCHAIN}
 			else
