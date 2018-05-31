@@ -17,11 +17,11 @@ MASTER=""
 MASTER_HTTP_PORT=""
 SLAVE_NODE=""
 SLAVE_TOKEN=""
-OSX_KEYCHAIN="login.keychain"
+OSX_KEYCHAIN="${SERVICE_HOME}/Library/Keychains/login.keychain-db"
 OSX_KEYCHAIN_PASS=""
 JAVA_ARGS=${JAVA_ARGS:-""}
 INSTALL_TMP=`mktemp -d -q -t org.jenkins-ci.slave.jnlp`
-DOWNLOADS_PATH=https://raw.github.com/rhwood/jenkins-slave-osx/master
+DOWNLOADS_PATH=https://raw.github.com/dimitryvolkov/jenkins-slave-osx/master
 
 function create_user() {
 	# see if user exists
@@ -249,12 +249,12 @@ You will need to import your own developer certificates following these steps:
 }
 
 function create_keychain {
-	local KEYCHAINS=${SERVICE_HOME}/Library/Keychains
+	local KEYCHAINS=${SERVICE_HOME}/Library/Keychains	
 	if [ ! -d ${KEYCHAINS} ]; then
 		sudo mkdir -p ${KEYCHAINS}
 		sudo chown -R ${SERVICE_USER}:${SERVICE_GROUP} ${KEYCHAINS}
 	fi
-	if [ ! -f ${KEYCHAINS}/${OSX_KEYCHAIN} ]; then
+	if [ ! -f ${OSX_KEYCHAIN} ]; then
 		sudo -i -u ${SERVICE_USER} security create-keychain -p ${OSX_KEYCHAIN_PASS} ${OSX_KEYCHAIN}
 		if [ -f ${KEYCHAINS}/.keychain_pass ]; then
 			sudo chmod 666 ${KEYCHAINS}/.keychain_pass
