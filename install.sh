@@ -115,7 +115,7 @@ function configure_daemon {
 		read -p "URL for Jenkins master [$MASTER]: " RESPONSE
 		MASTER=${RESPONSE:-$MASTER}
 	fi
-	while ! curl -L --url ${MASTER}/jnlpJars/slave.jar --insecure --location --silent --fail --output ${INSTALL_TMP}/slave.jar ; do
+	while ! curl -L --url ${MASTER}${MASTER_HTTP_PORT}/jnlpJars/slave.jar --insecure --location --silent --fail --output ${INSTALL_TMP}/slave.jar ; do
 		echo "Unable to connect to Jenkins at ${MASTER}"
 		read -p "URL for Jenkins master: " MASTER
 	done
